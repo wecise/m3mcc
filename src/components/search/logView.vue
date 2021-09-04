@@ -108,7 +108,7 @@ export default{
             this.editor.loading = true;
             let param = encodeURIComponent(JSON.stringify( this.model ));
 
-            this.m3.callFS("/matrix/m3search/searchBitlogByTerm.js",param).then(rtn=>{
+            this.m3.callFS("/matrix/m3mcc/searchBitlogByTerm.js",param).then(rtn=>{
                 this.editor.data = this.arrayToCsv(rtn.message.result);
                 this.editor.loading = false;
             }).catch(()=>{

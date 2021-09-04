@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import IndexView from './search/index';
+import IndexView from './mcc/index.vue';
 
 export default {
   name: 'MainView',

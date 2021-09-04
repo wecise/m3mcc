@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="event-container">
         <div>
             <el-button type="text" icon="el-icon-warning"> {{dt.title}}</el-button>
         </div>   
@@ -76,17 +76,17 @@
 </script>
 
 <style scoped>
-    .container{
+    .event-container{
         padding: 20px;
         background: #f2f2f2;
     }
 </style>
 <style>
     /* el-table hover actived style */
-    .container .el-table--enable-row-hover .el-table__body tr:hover>td {
+    .event-container .el-table--enable-row-hover .el-table__body tr:hover>td {
             background-color: #86b4e6!important;
     }
-    .container .el-table__body tr.current-row>td {
+    .event-container .el-table__body tr.current-row>td {
             background-color:#3c99f7!important;;
     }
 </style>

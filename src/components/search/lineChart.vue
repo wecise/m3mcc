@@ -88,7 +88,7 @@ export default{
         initData(){
             try{
                 let param = encodeURIComponent( JSON.stringify(this.model) );
-                this.m3.callFS("/matrix/m3search/searchPerformanceByTerm.js",param).then( res=>{
+                this.m3.callFS("/matrix/m3mcc/searchPerformanceByTerm.js",param).then( res=>{
                     
                     if(res.message.result.length < 1) return false;
                     
