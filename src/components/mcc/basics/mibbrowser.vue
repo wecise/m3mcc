@@ -19,6 +19,9 @@
                             <el-option label="V3" value="v3"></el-option>
                         </el-select>
                     </el-form-item>
+                    <el-form-item>
+                        <el-button type="text" icon="el-icon-setting"></el-button>
+                    </el-form-item>
                     <el-form-item label="Oid" label-width="40px">
                         <el-input placeholder="Oid"></el-input>
                     </el-form-item>
@@ -36,9 +39,7 @@
             </div>
             <Split style="background:#ffffff;">
                 <SplitArea :size="20" :minSize="0" style="overflow:hidden;">
-                    <div style="font-weight:900;height:30px;line-height:30px;padding:0 10px;">监控配置</div>
-                    <el-tree :data="tree.data" :props="tree.defaultProps" 
-                        @node-click="onNodeClick"></el-tree>
+                    <mibtree></mibtree>
                 </SplitArea>
                 <SplitArea :size="80" :minSize="0" style="overflow:hidden;">
                     <div style="font-weight:900;height:30px;line-height:30px;padding:0 10px;">SNMP Mibs</div>
@@ -50,8 +51,10 @@
 </template>
 <script>
     import _ from 'lodash';
+    import mibtree from './mibtree.vue';
 
     export default {
+        components: { mibtree },
         data(){
             return {
                 tree:{
@@ -111,7 +114,6 @@
 <style scoped>
     .el-container{
         height: calc(100vh - 80px);
-        background: #ffffff;
     }
     .el-header{
         height: 40px!important;
@@ -121,6 +123,8 @@
     }
     .el-main{
         padding: 0px;
+        overflow: hidden;
+        background: #ffffff;
     }
 </style>
 <style>

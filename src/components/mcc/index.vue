@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <Split style="background: #fff;">
-            <SplitArea :size="20" :minSize="0" style="overflow:hidden;">
+            <SplitArea :size="15" :minSize="0" style="overflow:hidden;">
                 <div style="padding: 11px;background: #f2f2f2;">监控配置</div>
                 <el-collapse accordion style="padding:0 10px;">
                     <el-collapse-item>
@@ -24,7 +24,7 @@
                     </el-collapse-item>
                 </el-collapse>
             </SplitArea>
-            <SplitArea :size="80" :minSize="0" style="overflow:hidden;background: #f2f2f2;">
+            <SplitArea :size="85" :minSize="0" style="overflow:hidden;background: #f2f2f2;">
                 <component  v-bind:is="currentView"></component>
             </SplitArea>
         </Split>
