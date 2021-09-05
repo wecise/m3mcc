@@ -15,22 +15,12 @@
                 tree:{
                     data: [
                         {
-                            label: 'oidgroup管理',
-                            id: 'oidgroup',
-                            children: []
-                        }, 
-                        {
-                            label: 'mibbrowser',
-                            id: 'mibbrowser',
-                            children: []
-                        }, 
-                        {
                             label: '日志管理',
                             id: 'log',
                             children: []
                         }, 
                         {
-                            label: 'trap管理',
+                            label: 'TRAP管理',
                             id: 'trap',
                             children: []
                         }, 
@@ -55,10 +45,20 @@
                             children: []
                         }, 
                         {
+                            label: 'MIB Browser',
+                            id: 'mibbrowser',
+                            children: []
+                        }, 
+                        {
                             label: '基础信息导入导出',
                             id: 'infoKeep',
                             children: []
-                        }
+                        },
+                        {
+                            label: 'OIDGROUP管理',
+                            id: 'oidgroup',
+                            children: []
+                        }, 
                     ],
                     defaultProps: {
                         children: 'children',
