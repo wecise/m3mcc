@@ -61,7 +61,16 @@
                                                     children: [
                                                         {
                                                             label: 'cisco',
-                                                            children: []
+                                                            children: [
+                                                                {
+                                                                    label: 'local',
+                                                                    children: []
+                                                                },
+                                                                {
+                                                                    label: '.1.3.6.2.4.1.9.2',
+                                                                    children: []
+                                                                }
+                                                            ]
                                                         }, 
                                                         {
                                                             label: 'ucdavls',
