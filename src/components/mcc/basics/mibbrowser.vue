@@ -6,30 +6,32 @@
         <el-main>
             <div style="height: 40px;padding: 10px 0 0 0;border-bottom:1px solid #dddddd;">
                 <el-form :inline="true">
-                    <el-form-item label="测试地址" label-width="70px">
-                        <el-input  placeholder="测试地址"></el-input>
+                    <el-form-item label="地址" label-width="40px">
+                        <el-input  placeholder="127.0.0.1" style="width:100px;"></el-input>
+                    </el-form-item>
+                    <el-form-item label="端口" label-width="40px">
+                        <el-input  placeholder="161" style="width:60px;"></el-input>
                     </el-form-item>
                     <el-form-item label="Community" label-width="70px">
-                        <el-input placeholder="Community"></el-input>
+                        <el-input placeholder="********" style="width:100px;"></el-input>
                     </el-form-item>
                     <el-form-item label="版本" label-width="40px">
-                        <el-select placeholder="版本" style="width:80px;">
-                            <el-option label="V1" value="v"></el-option>
-                            <el-option label="V2" value="v2"></el-option>
-                            <el-option label="V3" value="v3"></el-option>
+                        <el-select value="1" placeholder="V1" style="width:60px;">
+                            <el-option label="V1" value="1"></el-option>
+                            <el-option label="V2" value="2"></el-option>
+                            <el-option label="V3" value="3"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="text" icon="el-icon-setting"></el-button>
                     </el-form-item>
-                    <el-form-item label="Oid" label-width="40px">
-                        <el-input placeholder="Oid"></el-input>
+                    <el-form-item label="OID" label-width="40px">
+                        <el-input placeholder=".1.3.6.1.4.1.2021.10.1.5.1" style="width:180px;"></el-input>
                     </el-form-item>
                     <el-form-item label="操作" label-width="40px">
-                        <el-select placeholder="操作" style="width:80px;">
-                            <el-option label="V1" value="v"></el-option>
-                            <el-option label="V2" value="v2"></el-option>
-                            <el-option label="V3" value="v3"></el-option>
+                        <el-select value="GetSubtree" placeholder="GetSubtree" style="width:120px;">
+                            <el-option label="Get" value="Get"></el-option>
+                            <el-option label="GetSubtree" value="GetSubtree"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item>

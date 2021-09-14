@@ -6,7 +6,7 @@
         <el-main>
             <Split style="background:#ffffff;" direction="vertical">
                 <SplitArea :size="60" :minSize="0" style="overflow:hidden;">
-                    <el-tree :data="tree.data" :props="tree.defaultProps" 
+                    <el-tree :data="tree.data" :props="tree.defaultProps"
                         @node-click="onNodeClick"></el-tree>
                 </SplitArea>
                 <SplitArea :size="40" :minSize="0" style="overflow:hidden;">
@@ -16,14 +16,14 @@
                         border
                         style="width: 100%">
                         <el-table-column
-                        prop="name"
-                        label="Name"
-                        width="180">
+                        prop="key"
+                        label="Key"
+                        width="150">
                         </el-table-column>
                         <el-table-column
-                        prop="cisco"
-                        label="Cisco"
-                        width="120">
+                        prop="value"
+                        label="Value"
+                        width="150">
                         </el-table-column>
                     </el-table>
                 </SplitArea>
@@ -33,6 +33,7 @@
 </template>
 <script>
     import _ from 'lodash';
+    import $ from 'jquery'
 
     export default {
         data(){
@@ -40,52 +41,26 @@
                 tree:{
                     data: [
                         {
-                            label: 'MIB Tree',
-                            children: [
+                            Name: 'MIB Tree',
+                            Children: [
                                 {
-                                    label: 'mibbrowser',
-                                    children: []
-                                }, 
-                                {
-                                    label: '.iso.org.dod.internet',
-                                    children: [
+                                    Name: 'iso.org.dod.internet',
+                                    Children: [
                                         {
-                                            label: 'mgmt',
-                                            children: []
-                                        }, 
-                                        {
-                                            label: 'private',
-                                            children: [
+                                            Name: 'mgmt',
+                                            Children: [
                                                 {
-                                                    label: 'enterprise',
-                                                    children: [
-                                                        {
-                                                            label: 'cisco',
-                                                            children: [
-                                                                {
-                                                                    label: 'local',
-                                                                    children: []
-                                                                },
-                                                                {
-                                                                    label: '.1.3.6.2.4.1.9.2',
-                                                                    children: []
-                                                                }
-                                                            ]
-                                                        }, 
-                                                        {
-                                                            label: 'ucdavls',
-                                                            children: []
-                                                        }
-                                                    ]
+                                                    Name: '...',
+                                                    Children: []
                                                 }
                                             ]
                                         }, 
                                         {
-                                            label: 'snmpV2',
-                                            children: [
+                                            Name: 'snmpV2',
+                                            Children: [
                                                 {
-                                                    label: 'snmpModules',
-                                                    children: []
+                                                    Name: '...',
+                                                    Children: []
                                                 }
                                             ]
                                         }
@@ -95,8 +70,8 @@
                         }
                     ],
                     defaultProps: {
-                        children: 'children',
-                        label: 'label'
+                        children: 'Children',
+                        label: 'Name'
                     }
                 },
                 dt:{
@@ -105,9 +80,60 @@
                 }
             }
         },
+        mounted(){
+            this.getMIBTree();
+        },
         methods:{
             onNodeClick(node){
-                
+                //console.debug("onNodeClick",JSON.stringify(node))
+                let dtrows = []
+                for (var k in node) {
+                    //console.debug("type of", k, typeof(node[k]))
+                    if (typeof(node[k]) in {"string":1,"number":1}){
+                        dtrows.push({
+                            key: k,
+                            value: node[k]
+                        });
+                    }
+                }
+                this.$data.dt.rows = dtrows
+                $.ajax({
+                    url: "http://127.0.0.1:10801/mibtree?n="+node.Name+"&x=2",
+                    dataType: 'jsonp',
+                    type: 'GET',
+                    success(data) {
+                        //console.debug("onNodeClick",JSON.stringify(data))
+                        if (data && data.MIBTree && data.MIBTree[0] && data.MIBTree[0].Children) {
+                            node.Children = data.MIBTree[0].Children
+                        }
+                    },
+                    error(err){
+                        console.error("getMIBTree", JSON.stringify(err))
+                    }
+                });
+            },
+            getMIBTree(){
+                let mdata = this.$data
+                let param = encodeURIComponent( JSON.stringify({}) );
+                $.ajax({
+                    url: "http://127.0.0.1:10801/mibtree?n=internet&x=2",
+                    dataType: 'jsonp',
+                    type: 'GET',
+                    success(data) {
+                        //console.debug("getMIBTree",JSON.stringify(data))
+                        data.MIBTree[0].Name = "iso.org.dod.internet"
+                        data.MIBTree[0].Children = data.MIBTree[0].Children.filter(function(item) {
+                            return item.Name in {"mgmt":1,"snmpV2":1};
+                        });
+                        mdata.tree.data = data.MIBTree
+                    },
+                    error(err){
+                        console.error("getMIBTree", JSON.stringify(err))
+                    }
+                });
+                // this.m3.callFS("/matrix/m3mcc/mibtree.js", param).then(res=>{
+                //     this.tree = res.message.MIBTree
+                // })
             }
         }
     }
