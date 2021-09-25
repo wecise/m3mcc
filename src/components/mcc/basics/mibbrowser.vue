@@ -84,7 +84,7 @@
                 result: [],
                 result_columns: [
                     {prop:"Time", label:"Time"},
-                    {prop:"Addr", label:"IP:Port"},
+                    {prop:"Addr", label:"Addr"},
                     {prop:"Name", label:"Name"},
                     {prop:"OID", label:"OID"},
                     {prop:"Value", label:"Value"},
@@ -180,6 +180,15 @@
                             //console.debug("onNodeClick",JSON.stringify(data))
                             mdata.result = []
                             if (data && data.Result) {
+                                if (data.Result.length>0) {
+                                    mdata.result_columns = []
+                                    for(var k in data.Result[0]) {
+                                        mdata.result_columns.push({
+                                                prop: k,
+                                                label: k,
+                                            })
+                                    }
+                                }
                                 for (var i=0; i<data.Result.length; i++) {
                                     mdata.result.push(data.Result[i])
                                 }
