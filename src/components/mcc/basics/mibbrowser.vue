@@ -85,7 +85,8 @@
                 result_columns: [
                     {prop:"Time", label:"Time"},
                     {prop:"Addr", label:"IP:Port"},
-                    {prop:"Key", label:"Name/OID"},
+                    {prop:"Name", label:"Name"},
+                    {prop:"OID", label:"OID"},
                     {prop:"Value", label:"Value"},
                     {prop:"Type", label:"Type"},
                 ],
