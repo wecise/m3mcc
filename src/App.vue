@@ -49,6 +49,10 @@ export default {
     overflow: hidden;
   }
   
+  .el-input__inner{
+    padding: 0 5px!important;
+  }
+
   .el-menu .svg-icon{
     width: 1.2em!important;
     height: 1.2em!important;
@@ -58,5 +62,9 @@ export default {
   .main{
     padding-top: 50px;
     display: flex;
+  }
+
+  .container{
+    overflow: hidden;
   }
 </style>

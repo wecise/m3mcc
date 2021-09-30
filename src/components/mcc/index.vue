@@ -70,7 +70,7 @@ export default {
 
 <style scoped>
     .container{
-        position: relative;
+        flex: 1 1 auto;
         width:100%;
     }
 

@@ -1,14 +1,14 @@
 <template>
-    <el-container>
+    <el-container style="overflow:hidden; flex: 0 0 100%;">
         <el-header>
             <span style="font-weight:900;">MIB Browser</span>
         </el-header>
-        <el-main style="overflow:hidden; display:flex; flex-flow:column nowrap;">
+        <el-main style="overflow:hidden; flex: 1 1 0; display:flex; flex-flow:column nowrap;">
             <div style="background:#ffffff; overflow:hidden; flex:0 0 auto;">
                 <div style="height: 40px;padding: 10px 0 0 0;border-bottom:1px solid #dddddd;">
                     <el-form :inline="true">
                         <el-form-item label="地址" label-width="40px">
-                            <el-input v-model="snmp_o_p.ip" placeholder="127.0.0.1" style="width:100px;"></el-input>
+                            <el-input v-model="snmp_o_p.ip" placeholder="127.0.0.1" style="width:100px;"/>
                         </el-form-item>
                         <el-form-item label="端口" label-width="40px">
                             <el-input v-model="snmp_o_p.port" placeholder="161" style="width:60px;"></el-input>
@@ -17,7 +17,7 @@
                             <el-input v-model="snmp_o_p.community" placeholder="********" style="width:100px;"></el-input>
                         </el-form-item>
                         <el-form-item label="版本" label-width="40px">
-                            <el-select v-model="snmp_o_p.version" placeholder="1" style="width:70px;">
+                            <el-select v-model="snmp_o_p.version" placeholder="2" style="width:70px;">
                                 <el-option label="V1" value="1"></el-option>
                                 <el-option label="V2" value="2"></el-option>
                                 <el-option label="V3" value="3"></el-option>
@@ -32,7 +32,8 @@
                         <el-form-item label="操作" label-width="40px">
                             <el-select v-model="snmp_o_p.op" placeholder="Get" style="width:120px;">
                                 <el-option label="Get" value="Get"></el-option>
-                                <el-option label="GetSubtree" value="GetSubtree"></el-option>
+                                <el-option label="Walk" value="Walk"></el-option>
+                                <el-option label="Table" value="Table"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item>
@@ -46,15 +47,15 @@
                     <SplitArea :size="25" :minSize="0" style="overflow:hidden;">
                         <mibtree @node-click="onNodeClick"></mibtree>
                     </SplitArea>
-                    <SplitArea :size="75" :minSize="0" style="overflow:auto;">
-                        <el-header>
+                    <SplitArea :size="75" :minSize="0" style="overflow:hidden;">
+                        <el-header height="40px">
                             Result Table
                         </el-header>
                         <el-table
                             class="result"
                             :data="result"
                             border
-                            style="display:flex; flex-flow:column nowrap;">
+                            height="calc(100% - 40px)">
                             <el-table-column v-for="rc in result_columns" :key="rc.prop" :prop="rc.prop" :label="rc.label">
                             </el-table-column>
                         </el-table>
@@ -74,10 +75,10 @@
         data(){
             return {
                 snmp_o_p: {
-                    ip: "127.0.0.1",
+                    ip: "",
                     port: 161,
-                    community: "haoba_public",
-                    version: "1",
+                    community: "",
+                    version: "2",
                     OID: ".1.3.6.1.4.1.2021.10.1.5.1",
                     op: "Get",
                 },
@@ -138,39 +139,34 @@
         },
         methods:{
             onNodeClick(node){
-                if(node.Kind == "Table"){
+                if (node.Kind == "Node") {
                     this.snmp_o_p.OID = node.OID
+                    this.snmp_o_p.op = "Walk"
+                } else if (node.Kind == "Table") {
+                    this.snmp_o_p.OID = node.OID
+                    this.snmp_o_p.op = "Table"
                 } else {
                     this.snmp_o_p.OID = node.OID+".0"
+                    this.snmp_o_p.op = "Get"
                 }
             },
             run(){
-                let mdata = this.$data
-                // $.ajax({
-                //     url: "http://127.0.0.1:10801/get?op="+this.snmp_o_p.op+"&OID="+this.snmp_o_p.OID+"&ip="+this.snmp_o_p.ip+"&port="+this.snmp_o_p.port+"&community="+this.snmp_o_p.community+"&version="+this.snmp_o_p.version,
-                //     dataType: 'jsonp',
-                //     type: 'GET',
-                //     success(data) {
-                //         //console.debug("onNodeClick",JSON.stringify(data))
-                //         if (data && data.Result) {
-                //             for (var i=0; i<data.Result.length; i++) {
-                //                 mdata.result.push(data.Result[i])
-                //             }
-                //         }
-                //     },
-                //     error(err){
-                //         console.error("getMIBTree", JSON.stringify(err))
-                //     }
-                // });
-                this.m3
-                    .callService("m3service.mibbrowser", "get", {
+                this.$data.result = []; //执行操作，清除之前数据
+                this.snmpGet({
                         op: this.snmp_o_p.op,
                         OID: this.snmp_o_p.OID,
                         ip: this.snmp_o_p.ip,
                         port: this.snmp_o_p.port,
                         community: this.snmp_o_p.community,
                         version: this.snmp_o_p.version,
-                    })
+                        continuing: "",
+                });
+            },
+            snmpGet(params){
+                let me = this;
+                let mdata = this.$data;
+                this.m3
+                    .callService("m3service.mibbrowser", "get", params)
                     .then((res) => {
                         let data = res.message;
                         if(data.Error) {
@@ -178,19 +174,22 @@
                         } else {
                             data = data.Result;
                             //console.debug("onNodeClick",JSON.stringify(data))
-                            mdata.result = []
-                            if (data && data.Result) {
-                                if (data.Result.length>0) {
+                            if(data.Continuing) {
+                                params.continuing = data.Continuing
+                                setTimeout(me.snmpGet, 1000, params)
+                            }
+                            if (data && data.Rows) {
+                                if (data.Rows.length>0) {
                                     mdata.result_columns = []
-                                    for(var k in data.Result[0]) {
+                                    for(var k in data.Rows[0]) {
                                         mdata.result_columns.push({
                                                 prop: k,
                                                 label: k,
                                             })
                                     }
                                 }
-                                for (var i=0; i<data.Result.length; i++) {
-                                    mdata.result.push(data.Result[i])
+                                for (var i=0; i<data.Rows.length; i++) {
+                                    mdata.result.push(data.Rows[i])
                                 }
                             }
                         }
@@ -205,7 +204,6 @@
         height: calc(100vh - 80px);
     }
     .el-header{
-        height: 40px!important;
         line-height: 40px;
         padding: 0px 10px;
         background: #f2f2f2;
@@ -223,4 +221,5 @@
     .el-tree-node__label {
         font-size: 12px!important;
     }
+
 </style>
