@@ -99,13 +99,20 @@ export default {
     onNodeClick(node) {
       //console.debug("onNodeClick",JSON.stringify(node))
       let dtrows = [];
-      for (var k in node) {
-        //console.debug("type of", k, typeof(node[k]))
-        if (typeof node[k] in { string: 1, number: 1 }) {
-          dtrows.push({
-            key: k,
-            value: node[k],
-          });
+      let keys = node["--keys--"]
+      if(!keys) {
+        keys = Object.keys(node)
+      }
+      for(var ki=0; ki<keys.length; ki++) {
+        var k = keys[ki]
+        if(k.substring(0,2) != "--") {
+            //console.debug("type of", k, typeof(node[k]))
+            if (typeof node[k] in { string: 1, number: 1 }) {
+            dtrows.push({
+                key: k,
+                value: node[k],
+            });
+            }
         }
       }
       this.$data.dt.rows = dtrows;

@@ -49,7 +49,7 @@
                     </SplitArea>
                     <SplitArea :size="75" :minSize="0" style="overflow:hidden;">
                         <el-header height="40px">
-                            Result Table
+                            Result Table [<span>{{result.length}}/{{totalcount}}</span>]
                         </el-header>
                         <el-table
                             class="result"
@@ -75,6 +75,7 @@
         data(){
             return {
                 snmp_o_p: {
+                    request_id: 0,
                     ip: "",
                     port: 161,
                     community: "",
@@ -83,11 +84,12 @@
                     op: "Get",
                 },
                 result: [],
+                totalcount: 0,
                 result_columns: [
                     {prop:"Time", label:"Time"},
                     {prop:"Addr", label:"Addr"},
-                    {prop:"Name", label:"Name"},
                     {prop:"OID", label:"OID"},
+                    {prop:"Name", label:"Name"},
                     {prop:"Value", label:"Value"},
                     {prop:"Type", label:"Type"},
                 ],
@@ -152,7 +154,9 @@
             },
             run(){
                 this.$data.result = []; //执行操作，清除之前数据
+                this.snmp_o_p.request_id++;
                 this.snmpGet({
+                        request_id: this.snmp_o_p.request_id,
                         op: this.snmp_o_p.op,
                         OID: this.snmp_o_p.OID,
                         ip: this.snmp_o_p.ip,
@@ -174,23 +178,31 @@
                         } else {
                             data = data.Result;
                             //console.debug("onNodeClick",JSON.stringify(data))
-                            if(data.Continuing) {
+                            if(data.Continuing && params.request_id == me.snmp_o_p.request_id) {
                                 params.continuing = data.Continuing
-                                setTimeout(me.snmpGet, 1000, params)
+                                setTimeout(me.snmpGet, 1, params)
                             }
                             if (data && data.Rows) {
                                 if (data.Rows.length>0) {
                                     mdata.result_columns = []
-                                    for(var k in data.Rows[0]) {
-                                        mdata.result_columns.push({
-                                                prop: k,
-                                                label: k,
-                                            })
+                                    var keys = data.Rows[0]["--keys--"]
+                                    if(!keys) {
+                                        keys = Object.keys(data.Rows[0])
+                                    }
+                                    for(var ki=0; ki<keys.length; ki++) {
+                                        var k = keys[ki]
+                                        if(k.substring(0,2) != "--") {
+                                            mdata.result_columns.push({
+                                                        prop: k,
+                                                        label: k,
+                                                    })
+                                        }
                                     }
                                 }
                                 for (var i=0; i<data.Rows.length; i++) {
                                     mdata.result.push(data.Rows[i])
                                 }
+                                mdata.totalcount = Math.max(data.TotalCount, mdata.result.length)
                             }
                         }
                     });
