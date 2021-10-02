@@ -169,8 +169,9 @@
             snmpGet(params){
                 let me = this;
                 let mdata = this.$data;
+                let service = params.continuing?params.continuing:"m3service.mibbrowser"
                 this.m3
-                    .callService("m3service.mibbrowser", "get", params)
+                    .callService(service, "get", params)
                     .then((res) => {
                         let data = res.message;
                         if(data.Error) {
@@ -178,31 +179,33 @@
                         } else {
                             data = data.Result;
                             //console.debug("onNodeClick",JSON.stringify(data))
-                            if(data.Continuing && params.request_id == me.snmp_o_p.request_id) {
-                                params.continuing = data.Continuing
-                                setTimeout(me.snmpGet, 1, params)
-                            }
-                            if (data && data.Rows) {
-                                if (data.Rows.length>0) {
-                                    mdata.result_columns = []
-                                    var keys = data.Rows[0]["--keys--"]
-                                    if(!keys) {
-                                        keys = Object.keys(data.Rows[0])
-                                    }
-                                    for(var ki=0; ki<keys.length; ki++) {
-                                        var k = keys[ki]
-                                        if(k.substring(0,2) != "--") {
-                                            mdata.result_columns.push({
-                                                        prop: k,
-                                                        label: k,
-                                                    })
+                            if(params.request_id == me.snmp_o_p.request_id) {
+                                if(data.Continuing) {
+                                    params.continuing = data.Continuing
+                                    setTimeout(me.snmpGet, 1, params)
+                                }
+                                if (data && data.Rows) {
+                                    if (data.Rows.length>0) {
+                                        mdata.result_columns = []
+                                        var keys = data.Rows[0]["--keys--"]
+                                        if(!keys) {
+                                            keys = Object.keys(data.Rows[0])
+                                        }
+                                        for(var ki=0; ki<keys.length; ki++) {
+                                            var k = keys[ki]
+                                            if(k.substring(0,2) != "--") {
+                                                mdata.result_columns.push({
+                                                            prop: k,
+                                                            label: k,
+                                                        })
+                                            }
                                         }
                                     }
+                                    for (var i=0; i<data.Rows.length; i++) {
+                                        mdata.result.push(data.Rows[i])
+                                    }
+                                    mdata.totalcount = Math.max(data.TotalCount, mdata.result.length)
                                 }
-                                for (var i=0; i<data.Rows.length; i++) {
-                                    mdata.result.push(data.Rows[i])
-                                }
-                                mdata.totalcount = Math.max(data.TotalCount, mdata.result.length)
                             }
                         }
                     });
