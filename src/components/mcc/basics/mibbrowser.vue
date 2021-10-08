@@ -8,7 +8,7 @@
                 <div style="height: 40px;padding: 10px 0 0 0;border-bottom:1px solid #dddddd;">
                     <el-form :inline="true">
                         <el-form-item label="地址" label-width="40px">
-                            <el-input v-model="snmp_o_p.ip" placeholder="127.0.0.1" style="width:100px;"/>
+                            <el-input v-model="snmp_o_p.ip" placeholder="IP" style="width:100px;"/>
                         </el-form-item>
                         <el-form-item label="端口" label-width="40px">
                             <el-input v-model="snmp_o_p.port" placeholder="161" style="width:60px;"></el-input>
