@@ -205,22 +205,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.el-container {
-  height: calc(100vh - 80px);
-}
-.el-header {
-  height: 40px !important;
-  line-height: 40px;
-  padding: 0px 10px;
-  background: #f2f2f2;
-}
-.el-main {
-  padding: 0px;
-  overflow: hidden;
-  background: #ffffff;
-}
-</style>
 <style>
 .el-tree {
   height: 100%;

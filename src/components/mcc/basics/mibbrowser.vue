@@ -5,7 +5,7 @@
         </el-header>
         <el-main style="overflow:hidden; flex: 1 1 0; display:flex; flex-flow:column nowrap;">
             <div style="background:#ffffff; overflow:hidden; flex:0 0 auto;">
-                <div style="height: 40px;padding: 10px 0 0 0;border-bottom:1px solid #dddddd;">
+                <div style="padding: 10px 0 0 0; border-bottom:1px solid #dddddd;">
                     <el-form :inline="true">
                         <el-form-item label="地址" label-width="40px">
                             <el-input v-model="snmp_o_p.ip" placeholder="IP" style="width:100px;"/>
@@ -93,50 +93,6 @@
                     {prop:"Value", label:"Value"},
                     {prop:"Type", label:"Type"},
                 ],
-                tree:{
-                    data: [
-                        {
-                            label: 'oidgroup管理',
-                            children: []
-                        }, 
-                        {
-                            label: 'mibbrowser',
-                            children: []
-                        }, 
-                        {
-                            label: '日志管理',
-                            children: []
-                        }, 
-                        {
-                            label: 'trap管理',
-                            children: []
-                        }, 
-                        {
-                            label: '外接事件管理',
-                            children: []
-                        }, 
-                        {
-                            label: '分析情景管理',
-                            children: []
-                        }, 
-                        {
-                            label: '设备类型管理',
-                            children: []
-                        }, 
-                        {
-                            label: '厂商管理',
-                            children: []
-                        }, 
-                        {
-                            label: '基础信息导入导出',
-                            children: []
-                        }
-                    ],
-                    defaultProps: {
-                        children: 'children',
-                        label: 'label'
-                    }
-                }
             }
         },
         methods:{
@@ -215,26 +171,18 @@
 </script>
 
 <style scoped>
-    .el-container{
-        height: calc(100vh - 80px);
-    }
-    .el-header{
-        line-height: 40px;
-        padding: 0px 10px;
-        background: #f2f2f2;
-    }
-    .el-main{
-        padding: 0px;
-        overflow: hidden;
-        background: #ffffff;
-    }
-</style>
-<style>
-    .el-tree{
-        height: 100%;
-    }
-    .el-tree-node__label {
-        font-size: 12px!important;
-    }
-
+.el-container {
+  height: calc(100vh - 80px);
+}
+.el-header {
+  height: 40px !important;
+  line-height: 40px;
+  padding: 0px 10px;
+  background: #f2f2f2;
+}
+.el-main {
+  padding: 0px;
+  overflow: hidden;
+  background: #ffffff;
+}
 </style>
