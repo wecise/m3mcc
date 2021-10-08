@@ -1,24 +1,27 @@
 <template>
     <div class="container">
-        <el-menu default-active="event" class="m3mcc-el-menu" :collapse="isCollapse">
+        <el-menu default-active="event" 
+            class="m3mcc-el-menu" 
+            :collapse="isCollapse"
+            @select="onSelect">
             <el-menu-item index="event">
-                <i class="el-icon-menu"></i>
+                <i class="el-icon-warning"></i>
                 <span slot="title">事件列表</span>
             </el-menu-item>
             <el-menu-item index="policy">
-                <i class="el-icon-location"></i>
+                <i class="el-icon-document"></i>
                 <span slot="title">策略管理</span>
             </el-menu-item>
-            <el-menu-item index="entity">
+            <el-menu-item index="entitys">
                 <i class="el-icon-office-building"></i>
                 <span slot="title">设备列表</span>
             </el-menu-item>
             <el-submenu index="base">
                 <template slot="title">
-                    <i class="el-icon-location"></i>
+                    <i class="el-icon-setting"></i>
                     <span slot="title">基础信息</span>
                 </template>
-                <el-menu-item index="mib">
+                <el-menu-item index="mibbrowser">
                     <span slot="title">Mib管理</span>
                 </el-menu-item>
                 <el-menu-item index="kpi">
@@ -28,31 +31,29 @@
                     <span slot="title">分析情景管理</span>
                 </el-menu-item>
             </el-submenu>
-            <el-menu-item index="entityKeep">
-                <i class="el-icon-setting"></i>
-                <span slot="title">设备管理</span>
-            </el-menu-item>
         </el-menu>
         <div class="content">
-            <component v-bind:is="currentView"></component>
+            <component v-bind:is="currentView" :global="global"></component>
         </div>
     </div>
     
 </template>
 
 <script>
-import _ from 'lodash';
 import basics from './basics/index.vue';
 import mibbrowser from './basics/mibbrowser.vue';
-import entity from './entity/index.vue';
 import policy from './policy/index.vue';
+import event from '../event/MainView.vue';
+import entitys from '../entity/index.vue';
+
 
 export default {
     components:{
         basics,
-        entity,
+        entitys,
         policy,
-        mibbrowser
+        mibbrowser,
+        event
     },
     props:{
         global: Object
@@ -60,7 +61,7 @@ export default {
     data(){
         return {
             isCollapse: true,
-            currentView: "mibbrowser"
+            currentView: "event"
         }
     },
     created(){
@@ -72,6 +73,9 @@ export default {
     methods: {
         onToggleView(node){
             this.currentView = node.id;
+        },
+        onSelect(key) {
+            this.currentView = key;
         }
     }
 }
@@ -85,7 +89,7 @@ export default {
     }
 
     .content{
-        width:100%;
+        width: calc(100% - 64px);
     }
 
     .el-menu.el-menu--collapse{
