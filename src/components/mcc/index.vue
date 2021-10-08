@@ -1,33 +1,41 @@
 <template>
     <div class="container">
-        <Split style="background: #fff;">
-            <SplitArea :size="15" :minSize="0" style="overflow:hidden;">
-                <div style="padding: 11px;background: #f2f2f2;">监控配置</div>
-                <el-collapse accordion style="padding:0 10px;">
-                    <el-collapse-item>
-                        <template slot="title">
-                            <i class="el-icon-setting"></i> 基础信息
-                        </template>
-                        <basics @node-click="onToggleView"></basics>
-                    </el-collapse-item>
-                    <el-collapse-item>
-                        <template slot="title">
-                            <i class="el-icon-office-building"></i> 设备管理
-                        </template>
-                        <entity></entity>
-                    </el-collapse-item>
-                    <el-collapse-item>
-                        <template slot="title">
-                            <i class="el-icon-files"></i> 策略管理
-                        </template>
-                        <policy></policy>
-                    </el-collapse-item>
-                </el-collapse>
-            </SplitArea>
-            <SplitArea :size="85" :minSize="0" style="overflow:hidden;background: #f2f2f2;">
-                <component  v-bind:is="currentView"></component>
-            </SplitArea>
-        </Split>
+        <el-menu default-active="event" class="m3mcc-el-menu" :collapse="isCollapse">
+            <el-menu-item index="event">
+                <i class="el-icon-menu"></i>
+                <span slot="title">事件列表</span>
+            </el-menu-item>
+            <el-menu-item index="policy">
+                <i class="el-icon-location"></i>
+                <span slot="title">策略管理</span>
+            </el-menu-item>
+            <el-menu-item index="entity">
+                <i class="el-icon-office-building"></i>
+                <span slot="title">设备列表</span>
+            </el-menu-item>
+            <el-submenu index="base">
+                <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span slot="title">基础信息</span>
+                </template>
+                <el-menu-item index="mib">
+                    <span slot="title">Mib管理</span>
+                </el-menu-item>
+                <el-menu-item index="kpi">
+                    <span slot="title">指标管理</span>
+                </el-menu-item>
+                <el-menu-item index="situation">
+                    <span slot="title">分析情景管理</span>
+                </el-menu-item>
+            </el-submenu>
+            <el-menu-item index="entityKeep">
+                <i class="el-icon-setting"></i>
+                <span slot="title">设备管理</span>
+            </el-menu-item>
+        </el-menu>
+        <div class="content">
+            <component v-bind:is="currentView"></component>
+        </div>
     </div>
     
 </template>
@@ -51,6 +59,7 @@ export default {
     },
     data(){
         return {
+            isCollapse: true,
             currentView: "mibbrowser"
         }
     },
@@ -72,17 +81,26 @@ export default {
     .container{
         position: relative;
         width:100%;
+        display: flex;
     }
 
-    .container .el-tabs--border-card {
-        box-shadow: unset;
-        height: 100%;
+    .content{
+        width:100%;
     }
+
+    .el-menu.el-menu--collapse{
+        background-color: #ffffff!important;
+    }
+
 </style>
 <style>
     .container .el-collapse-item__header {
         color: #666666!important;
         font-size: 12px!important;
         font-weight: normal!important;
+    }
+
+    .el-menu.el-menu--popup.el-menu--popup-right-start{
+        background-color: #ffffff!important;
     }
 </style>

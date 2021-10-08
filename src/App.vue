@@ -34,7 +34,7 @@ export default {
     setTimeout(()=>{
       this.global = this.m3.global;
       this.auth = this.m3.auth;
-    },500)
+    },1500)
       
   }
 }

@@ -15,48 +15,23 @@
                 tree:{
                     data: [
                         {
-                            label: 'oidgroup管理',
-                            id: 'oidgroup',
-                            children: []
-                        }, 
-                        {
                             label: 'mibbrowser',
                             id: 'mibbrowser',
                             children: []
-                        }, 
+                        },
                         {
-                            label: '日志管理',
-                            id: 'log',
-                            children: []
-                        }, 
-                        {
-                            label: 'trap管理',
-                            id: 'trap',
-                            children: []
-                        }, 
-                        {
-                            label: '外接事件管理',
-                            id: 'event',
+                            label: '指标管理',
+                            id: 'kpiKeep',
                             children: []
                         }, 
                         {
                             label: '分析情景管理',
-                            id: 'diagnosis',
+                            id: 'situation',
                             children: []
                         }, 
                         {
-                            label: '设备类型管理',
-                            id: 'model',
-                            children: []
-                        }, 
-                        {
-                            label: '厂商管理',
-                            id: 'manufacturer',
-                            children: []
-                        }, 
-                        {
-                            label: '基础信息导入导出',
-                            id: 'infoKeep',
+                            label: '设备管理',
+                            id: 'entity',
                             children: []
                         }
                     ],
