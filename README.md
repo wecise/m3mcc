@@ -11,7 +11,9 @@
 
 > The contents of the env are as follows
 ```
-VUE_APP_M3_APP="m3mcc"               -- app name
+VUE_APP_M3_APP="m3mcc"                  -- app name
+
+VUE_APP_M3_VERSION="1.0.0"              -- app version
 
 VUE_APP_M3_HOST="47.92.151.165:8080"    -- host
 
