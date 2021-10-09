@@ -1,11 +1,11 @@
 <template>
   <div class="m3" v-if="auth && auth.signedUser">
-    <Header :auth="auth.signedUser" class="header"></Header>
+    <Header :auth="auth.signedUser" class="header" v-if="control.header.show"></Header>
     <div class="main">
-      <SideBar class="sidebar" :auth="auth.signedUser" :global="global"></SideBar>
+      <SideBar class="sidebar" :auth="auth.signedUser" :global="global"  v-if="control.sidebar.show"></SideBar>
       <MainView :auth="auth" :global="global" class="content"></MainView>
     </div>
-    <Footer :auth="auth.signedUser" class="footer"></Footer>
+    <Footer :auth="auth.signedUser" class="footer" v-if="control.footer.show"></Footer>
   </div>
 </template>
 
@@ -27,7 +27,18 @@ export default {
   data(){
     return {
       global: null,
-      auth: null
+      auth: null,
+      control:{
+        header:{
+          show: true
+        },
+        sidebar:{
+          show: false
+        },
+        footer:{
+          show: true
+        }
+      }
     }
   },
   created(){

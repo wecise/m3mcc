@@ -88,8 +88,12 @@ export default {
         display: flex;
     }
 
+    .m3mcc-el-menu{
+        height: 100vh;
+    }
+
     .content{
-        width: calc(100% - 64px);
+        width: calc(100vw - 64px);
     }
 
     .el-menu.el-menu--collapse{

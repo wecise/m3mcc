@@ -1,5 +1,5 @@
 <template>
-    <el-container style="overflow:hidden; flex: 0 0 100%;">
+    <el-container style="overflow:hidden; flex: 0 0 100%;width:calc(100vw - 64px);">
         <el-header>
             <span style="font-weight:900;">MIB Browser</span>
         </el-header>
