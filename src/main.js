@@ -16,8 +16,9 @@ const themeColor = {dark:'#252D47',light:'#409EFF'};
 const theme = Cookies.get("m3-theme")?themeColor[Cookies.get("m3-theme")]:'#252D47';// dark:#252D47 & blue:#409EFF  default theme is dark
 import(`./assets/theme/element-${theme}/index.css`)
 
-m3.callService =  (service, action, params) => {
-  service += process.env.NODE_ENV === 'production'?".v1":".dev"
+m3.service_prefix = process.env.NODE_ENV === 'production'?"v1":"dev"
+m3.callService = function (service, action, params) {
+  service = this.service_prefix + "." + service
   let input = encodeURIComponent(JSON.stringify({ service: service, action: action, params: params }));
   return this.callFS("/matrix/nats/action.js", input);
 };

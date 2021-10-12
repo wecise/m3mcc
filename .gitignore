@@ -13,6 +13,7 @@ pnpm-debug.log*
 .DS_Store
 node_modules/
 app/
+package-lock.json
 
 .idea
 .vscode
