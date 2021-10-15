@@ -43,9 +43,11 @@ export default {
   },
   created(){
     setTimeout(()=>{
-      this.global = this.m3.global;
-      this.auth = this.m3.auth;
+      this.global = window.m3.global;
+      this.auth = window.m3.auth;
     },1500)
+
+    
       
   }
 }

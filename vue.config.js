@@ -43,10 +43,25 @@ module.exports = {
                     })
                 ]
             }
+        } else {
+            return {
+                
+                plugins: [
+                    
+                    new CompressionPlugin({
+                        test: new RegExp(
+                            '\\.(' + productionGzipExtensions.join('|') + ')$'
+                        ),
+                        threshold:10240,
+                        minRatio: 1,
+                        deleteOriginalAssets:false
+                    }),
+                ]
+            }
         }
-      },
+    },
 
-      chainWebpack(config) {
+    chainWebpack(config) {
 
         // set svg-sprite-loader
         config.module

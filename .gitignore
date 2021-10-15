@@ -12,7 +12,7 @@ pnpm-debug.log*
 # Editor directories and files
 .DS_Store
 node_modules/
-app/
+/app/
 package-lock.json
 
 .idea
