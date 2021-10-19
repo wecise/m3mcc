@@ -6,7 +6,7 @@ window.state && window.state("正在加载依赖组件...")
 // auth,global,Vue... 为 m3 内部加载的模块, 这里的定义只为标明依赖关系时引用, 初始化时会自动替换为m3内部定义
 let mods = {auth:{}, global:{}, Vue:{}}
 mods.App = {
-    f: () => import("./App.vue"),  // 动态加载 App.vue
+    f: () => import("@/App.vue"),  // 动态加载 App.vue
     deps: [mods.global, mods.auth, mods.Vue] // App.vue 运行时依赖 global 和 auth
 }
 
@@ -20,12 +20,10 @@ let m3config = {
     mods,
 }
 
-import Cookies from 'js-cookie';
-
 // 加载m3js
 //let m3js = process.env.NODE_ENV === 'production'?"@wecise/m3js":"./m3js"
-let m3js = "./m3js"
-import(`${m3js}/src/index.js`).then((m)=>{
+//import(`${m3js}/src/index.js`).then((m)=>{
+import("./m3.js").then((m)=>{
     window.state && window.state("正在初始化小应用配置...")
     let m3 = m.default;
     m3.Init(m3config).then(()=>{

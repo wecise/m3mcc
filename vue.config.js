@@ -55,7 +55,7 @@ module.exports = {
             "vue": "Vue",
         }
         config.entry = {
-            app: "./src/main.js"
+            app: "./src/m3js/src/index.js"
         }
         //config.mode = "production"
         return config;
