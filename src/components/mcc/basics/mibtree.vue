@@ -7,7 +7,7 @@
       flex-flow: column nowrap;
     "
   >
-    <el-header> SNMP MIBS </el-header>
+    <el-header style="height:40px"> SNMP MIBS </el-header>
     <div style="overflow: hidden; flex: 1 1 100%">
       <Split style="background: #ffffff" direction="vertical">
         <SplitArea
@@ -206,6 +206,12 @@ export default {
 </script>
 
 <style>
+.el-header {
+  height: 40px !important;
+  line-height: 40px;
+  padding: 0px 10px;
+  background: #f2f2f2;
+}
 .el-tree {
   height: 100%;
 }

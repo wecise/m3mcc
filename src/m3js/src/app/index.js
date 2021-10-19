@@ -3,9 +3,9 @@ import { _ } from "core-js";
 import http from "../axios/http"
 
 /* App */
-export let appDeploy = async function(data){
+export let appDeploy = function(data){
       
-    return new Promise( await function (resolve, reject) {
+    return new Promise( function (resolve, reject) {
       
         let url = `/fs/import${window.auth.isAdmin?'?issys=true':''}`
         let fm = new FormData();
@@ -24,9 +24,9 @@ export let appDeploy = async function(data){
 };
 
 
-export let appExport = async function(data){
+export let appExport = function(data){
       
-    return new Promise( await function (resolve, reject) {
+    return new Promise( function (resolve, reject) {
       
         let classStr = data.class.join("&class=");
         let url = `/app/export?name=${data.name}&dir=${data.dir}&version=${data.version}${classStr}`;
@@ -42,9 +42,9 @@ export let appExport = async function(data){
     })
 };
 
-export let appImport = async function(data){
+export let appImport = function(data){
       
-    return new Promise( await function (resolve, reject) {
+    return new Promise( function (resolve, reject) {
       
         let url = `/app/import`;
         let fm = new FormData();

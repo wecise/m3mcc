@@ -1,28 +1,52 @@
 <template>
-  <div class="m3">
-    ......
+  <div class="m3" v-if="auth && auth.signedUser">
+    <Header :auth="auth.signedUser" class="header" v-if="control.header.show"></Header>
+    <div class="main">
+      <SideBar class="sidebar" :auth="auth.signedUser" :global="global"  v-if="control.sidebar.show"></SideBar>
+    <div></div>
+    </div>
+    <Footer :auth="auth.signedUser" class="footer" v-if="control.footer.show"></Footer>
   </div>
 </template>
 
 <script>
 
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+import SideBar from './components/layout/SideBar';
+
 export default {
   name: 'app',
   components: {
+    Header,
+    Footer,
+    SideBar
   },
   data(){
     return {
       global: null,
       auth: null,
       control:{
+        header:{
+          show: true
+        },
+        sidebar:{
+          show: false
+        },
+        footer:{
+          show: true
+        }
       }
     }
   },
   created(){
-    // setTimeout(()=>{
-    //   this.global = this.m3.global;
-    //   this.auth = this.m3.auth;
-    // },1500)
+    setTimeout(()=>{
+      this.global = window.m3.global;
+      this.auth = window.m3.auth;
+    },1500)
+
+    
+      
   }
 }
 </script>

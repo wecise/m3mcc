@@ -1,4 +1,5 @@
-const axios = require('./axios.min.js');
+
+import axios from 'axios';
 //const qs = require('./qs.min.js');
 
 // 创建axios实例

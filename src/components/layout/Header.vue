@@ -111,8 +111,8 @@ export default{
             //let theme = {dark:'#252D47',light:'#409EFF'};
             
             Cookies.set('m3-theme',val);
-            
-            window.location.reload();
+            window.m3.Theme.initTheme();
+            //window.location.reload();
         }
     }
 }

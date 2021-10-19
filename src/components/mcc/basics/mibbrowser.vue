@@ -67,7 +67,6 @@
 </template>
 <script>
     import _ from 'lodash';
-    import $ from 'jquery';
     import mibtree from './mibtree.vue';
 
     export default {
