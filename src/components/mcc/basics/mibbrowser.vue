@@ -94,6 +94,10 @@
                 ],
             }
         },
+        beforeDestroy(){
+            // 停止持续请求
+            this.snmp_o_p.request_id = 0;
+        },
         methods:{
             onNodeClick(node){
                 if (node.Kind == "Node") {
@@ -136,6 +140,7 @@
                             //console.debug("onNodeClick",JSON.stringify(data))
                             if(params.request_id == me.snmp_o_p.request_id) {
                                 if(data.Continuing) {
+                                    // 持续请求
                                     params.continuing = data.Continuing
                                     setTimeout(me.snmpGet, 1, params)
                                 }

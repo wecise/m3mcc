@@ -11,6 +11,8 @@
 
 <script>
 
+import 'element-ui/lib/theme-chalk/index.css'
+
 import MainView from './components/MainView';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';

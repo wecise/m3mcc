@@ -61,7 +61,7 @@ export default {
     data(){
         return {
             isCollapse: true,
-            currentView: "event"
+            currentView: "mibbrowser"
         }
     },
     created(){
